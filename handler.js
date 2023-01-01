@@ -1,5 +1,5 @@
-// const { spawnSync } = require("child_process")
-// const { readFileSync, createWriteStream, unlinkSync } = require("fs")
+const { spawnSync } = require("child_process")
+const { readFileSync, createWriteStream, unlinkSync } = require("fs")
 // const centra = require('centra')
 const https = require('https')
 // const AWS = require("aws-sdk")
@@ -36,27 +36,27 @@ async function hello(event) {
   await downloadFile(audioUrl, audioPath)
   console.log("=== Finish downloading files")
 
-  // const videoName = "video-" + videoId + ".mp4"
-  // const videoPath = "/tmp/" + videoName
+  const videoName = "video-" + videoId + ".mp4"
+  const videoPath = "/tmp/" + videoName
 
-  // console.log("=== Start FFMPEG")
-  // spawnSync(
-  //   "/opt/ffmpeg/ffmpeg",
-  //   [
-  //     "-y",
-  //     "-r", "60",
-  //     "-loop", "1",
-  //     "-i", imagePath,
-  //     "-i", audioPath,
-  //     "-loop", "1",
-  //     "-i", maskPath,
-  //     "-filter_complex", filterComplex,
-  //     "-t", parseInt(duration) - 0.05,
-  //     videoPath
-  //   ],
-  //   { stdio: "inherit" }
-  // )
-  // console.log("=== Finish FFMPEG")
+  console.log("=== Start FFMPEG")
+  spawnSync(
+    "/opt/ffmpeg/ffmpeg",
+    [
+      "-y",
+      "-r", "60",
+      "-loop", "1",
+      "-i", imagePath,
+      "-i", audioPath,
+      "-loop", "1",
+      "-i", maskPath,
+      "-filter_complex", filterComplex,
+      "-t", parseInt(duration) - 0.05,
+      videoPath
+    ],
+    { stdio: "inherit" }
+  )
+  console.log("=== Finish FFMPEG")
 
   // const tempFile = readFileSync(videoPath)
 
