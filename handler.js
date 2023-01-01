@@ -1,7 +1,7 @@
 // const { spawnSync } = require("child_process")
 // const { readFileSync, createWriteStream, unlinkSync } = require("fs")
 // const centra = require('centra')
-// const https = require('https')
+const https = require('https')
 // const AWS = require("aws-sdk")
 
 // const s3 = new AWS.S3()
@@ -27,14 +27,14 @@ async function hello(event) {
   console.log("=== Filter Complex", filterComplex)
   console.log("=== Duration", duration)
 
-  // const imagePath = "/tmp/image.jpg"
-  // const audioPath = "/tmp/audio.mp3"
-  // const maskPath = "./assets/mask.png"
+  const imagePath = "/tmp/image.jpg"
+  const audioPath = "/tmp/audio.mp3"
+  const maskPath = "./assets/mask.png"
 
-  // console.log("=== Start downloading files")
-  // await downloadFile(imageUrl, imagePath)
-  // await downloadFile(audioUrl, audioPath)
-  // console.log("=== Finish downloading files")
+  console.log("=== Start downloading files")
+  await downloadFile(imageUrl, imagePath)
+  await downloadFile(audioUrl, audioPath)
+  console.log("=== Finish downloading files")
 
   // const videoName = "video-" + videoId + ".mp4"
   // const videoPath = "/tmp/" + videoName
@@ -95,29 +95,29 @@ async function hello(event) {
   // console.log("=== Done with video " + videoId)
 }
 
-// async function downloadFile (url, targetFile) {
-//   return await new Promise((resolve, reject) => {
-//     https.get(url, response => {
-//       const code = response.statusCode ?? 0
+async function downloadFile (url, targetFile) {
+  return await new Promise((resolve, reject) => {
+    https.get(url, response => {
+      const code = response.statusCode ?? 0
 
-//       if (code >= 400) {
-//         return reject(new Error(response.statusMessage))
-//       }
+      if (code >= 400) {
+        return reject(new Error(response.statusMessage))
+      }
 
-//       if (code > 300 && code < 400 && !!response.headers.location) {
-//         return downloadFile(response.headers.location, targetFile)
-//       }
+      if (code > 300 && code < 400 && !!response.headers.location) {
+        return downloadFile(response.headers.location, targetFile)
+      }
 
-//       const fileWriter = createWriteStream(targetFile)
-//       .on('finish', () => {
-//         resolve({})
-//       })
+      const fileWriter = createWriteStream(targetFile)
+      .on('finish', () => {
+        resolve({})
+      })
 
-//       response.pipe(fileWriter)
-//     }).on('error', error => {
-//       reject(error)
-//     })
-//   })
-// }
+      response.pipe(fileWriter)
+    }).on('error', error => {
+      reject(error)
+    })
+  })
+}
 
 module.exports = {hello}
