@@ -2,9 +2,9 @@ const { spawnSync } = require("child_process")
 const { readFileSync, createWriteStream, unlinkSync } = require("fs")
 // const centra = require('centra')
 const https = require('https')
-// const AWS = require("aws-sdk")
+const AWS = require("aws-sdk")
 
-// const s3 = new AWS.S3()
+const s3 = new AWS.S3()
 
 "use strict"
 
@@ -58,19 +58,19 @@ async function hello(event) {
   )
   console.log("=== Finish FFMPEG")
 
-  // const tempFile = readFileSync(videoPath)
+  const tempFile = readFileSync(videoPath)
 
-  // unlinkSync(imagePath)
-  // unlinkSync(audioPath)
-  // unlinkSync(videoPath)
+  console.log("=== Start S3 upload")
+  await s3.putObject({
+    Bucket: "klippr-temp",
+    Key: videoName,
+    Body: tempFile
+  }).promise()
+  console.log("=== Finish S3 upload")
 
-  // console.log("=== Start S3 upload")
-  // await s3.putObject({
-  //   Bucket: "klippr-temp",
-  //   Key: videoName,
-  //   Body: tempFile
-  // }).promise()
-  // console.log("=== Finish S3 upload")
+  unlinkSync(imagePath)
+  unlinkSync(audioPath)
+  unlinkSync(videoPath)
 
   // console.log("=== Sending POST request to update Rails video", videoId);
   // const webhook_url = "https://klippr.video/webhooks/update_video"
