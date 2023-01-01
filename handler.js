@@ -1,6 +1,6 @@
 const { spawnSync } = require("child_process")
 const { readFileSync, createWriteStream, unlinkSync } = require("fs")
-// const centra = require('centra')
+const centra = require('centra')
 const https = require('https')
 const AWS = require("aws-sdk")
 
@@ -72,27 +72,27 @@ async function hello(event) {
   unlinkSync(audioPath)
   unlinkSync(videoPath)
 
-  // console.log("=== Sending POST request to update Rails video", videoId);
-  // const webhook_url = "https://klippr.video/webhooks/update_video"
-  // const json = {
-  //   video_id: videoId,
-  //   video_temp_url: "https://klippr-temp.s3.us-east-1.amazonaws.com/" + videoName
-  // }
-  // const res = await centra(webhook_url, "POST").body(json, "json").send()
-	// console.log("=== POST result", await res.statusCode)
+  console.log("=== Sending POST request to update Rails video", videoId);
+  const webhook_url = "https://klippr.video/webhooks/update_video"
+  const json = {
+    video_id: videoId,
+    video_temp_url: "https://klippr-temp.s3.us-east-1.amazonaws.com/" + videoName
+  }
+  const res = await centra(webhook_url, "POST").body(json, "json").send()
+	console.log("=== POST result", await res.statusCode)
 
-  // if (res.statusCode == 200) {
-  //   console.log("=== Deleting S3 file")
-  //   await s3.deleteObject({
-  //     Bucket: "klippr-temp",
-  //     Key: videoName
-  //   }).promise()
-  //   console.log("=== Deleted S3 file")
-  // } else {
-  //   console.log("=== S3 FILE NOT DELETED")
-  // }
+  if (res.statusCode == 200) {
+    console.log("=== Deleting S3 file")
+    await s3.deleteObject({
+      Bucket: "klippr-temp",
+      Key: videoName
+    }).promise()
+    console.log("=== Deleted S3 file")
+  } else {
+    console.log("=== S3 FILE NOT DELETED")
+  }
 
-  // console.log("=== Done with video " + videoId)
+  console.log("=== Done with video " + videoId)
 }
 
 async function downloadFile (url, targetFile) {
