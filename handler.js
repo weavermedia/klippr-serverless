@@ -14,9 +14,16 @@ async function hello(event) {
 
   let body = JSON.parse(event.Records[0].body)
 
-  const { videoId, audioUrl, imageUrl, filterComplex, duration } = body
+  const {
+    videoId,
+    audioUrl,
+    imageUrl,
+    filterComplex,
+    duration,
+    webhook_base_url
+  } = body
 
-  if (!videoId || !audioUrl || !imageUrl || !filterComplex || !duration) {
+  if (!videoId || !audioUrl || !imageUrl || !filterComplex || !duration || !webhook_base_url) {
     console.log("Required params not found")
     return
   }
@@ -26,6 +33,7 @@ async function hello(event) {
   console.log("=== Image URL", imageUrl)
   console.log("=== Filter Complex", filterComplex)
   console.log("=== Duration", duration)
+  console.log("=== Webhook Base URL", webhook_base_url)
 
   const imagePath = "/tmp/image.jpg"
   const audioPath = "/tmp/audio.mp3"
@@ -73,7 +81,7 @@ async function hello(event) {
   unlinkSync(videoPath)
 
   console.log("=== Sending POST request to update Rails video", videoId);
-  const webhook_url = "https://klippr.video/webhooks/update_video"
+  const webhook_url = webhook_base_url + "/webhooks/update_video"
   const json = {
     video_id: videoId,
     video_temp_url: "https://klippr-temp.s3.us-east-1.amazonaws.com/" + videoName
