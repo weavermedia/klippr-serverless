@@ -1,0 +1,12 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+# Misc.
+npm-debug.log
+.env
+.vscode
+.DS_Store

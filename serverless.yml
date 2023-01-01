@@ -1,0 +1,34 @@
+org: klippr
+app: aws-node-http-api
+service: aws-node-http-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:*
+          Resource: "*"
+
+functions:
+  hello:
+    architecture: x86_64
+    memorySize: 10240
+    handler: handler.hello
+    url: true
+    timeout: 600
+    layers:
+      - {Ref: FfmpegLambdaLayer}
+    events:
+      - sqs:
+          arn: arn:aws:sqs:us-east-1:076776954382:KlipprQueue
+          batchSize: 1
+
+layers:
+  ffmpeg:
+    path: layer
