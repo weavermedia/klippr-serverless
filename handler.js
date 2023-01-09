@@ -38,6 +38,7 @@ async function hello(event) {
   const imagePath = "/tmp/image.jpg"
   const audioPath = "/tmp/audio.mp3"
   const maskPath = "./assets/mask.png"
+  const shadowPath = "./assets/shadow.png"
 
   console.log("=== Start downloading files")
   await downloadFile(imageUrl, imagePath)
@@ -46,6 +47,12 @@ async function hello(event) {
 
   const videoName = "video-" + videoId + ".mp4"
   const videoPath = "/tmp/" + videoName
+
+  // INPUTS
+  // [0] IMAGE
+  // [1] AUDIO
+  // [2] MASK
+  // [3] SHADOW
 
   console.log("=== Start FFMPEG")
   spawnSync(
@@ -58,6 +65,8 @@ async function hello(event) {
       "-i", audioPath,
       "-loop", "1",
       "-i", maskPath,
+      "-loop", "1",
+      "-i", shadowPath,
       "-filter_complex", filterComplex,
       "-t", parseInt(duration) - 0.05,
       videoPath
