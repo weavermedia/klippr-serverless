@@ -20,10 +20,11 @@ async function hello(event) {
     imageUrl,
     filterComplex,
     duration,
+    frame_rate,
     webhook_base_url
   } = body
 
-  if (!videoId || !audioUrl || !imageUrl || !filterComplex || !duration || !webhook_base_url) {
+  if (!videoId || !audioUrl || !imageUrl || !filterComplex || !duration || !frame_rate || !webhook_base_url) {
     console.log("Required params not found")
     return
   }
@@ -33,6 +34,7 @@ async function hello(event) {
   console.log("=== Image URL", imageUrl)
   console.log("=== Filter Complex", filterComplex)
   console.log("=== Duration", duration)
+  console.log("=== Frame Rate", frame_rate)
   console.log("=== Webhook Base URL", webhook_base_url)
 
   const imagePath = "/tmp/image.jpg"
@@ -59,7 +61,7 @@ async function hello(event) {
     "/opt/ffmpeg/ffmpeg",
     [
       "-y",
-      "-r", "60",
+      "-r", frame_rate,
       "-loop", "1",
       "-i", imagePath,
       "-i", audioPath,
