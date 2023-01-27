@@ -9,6 +9,10 @@ const s3 = new AWS.S3()
 "use strict"
 
 async function hello(event) {
+  await encode_pro(event)
+}
+
+async function encode_pro(event) {
   console.log("=== EVENT BODY", event.Records[0].body)
   if (event.Records[0].body[0] != "{") return
 
