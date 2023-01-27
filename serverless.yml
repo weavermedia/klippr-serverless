@@ -26,7 +26,7 @@ functions:
       - {Ref: FfmpegLambdaLayer}
     events:
       - sqs:
-          arn: arn:aws:sqs:us-east-1:076776954382:KlipprQueue
+          arn: arn:aws:sqs:us-east-1:076776954382:KlipprProQueue
           batchSize: 1
 
 layers:
