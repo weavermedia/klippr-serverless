@@ -9,10 +9,14 @@ const s3 = new AWS.S3()
 "use strict"
 
 async function hello(event) {
-  await encode_pro(event)
+  await encode_video(event)
 }
 
 async function encode_pro(event) {
+  await encode_video(event)
+}
+
+async function encode_video(event) {
   console.log("=== EVENT BODY", event.Records[0].body)
   if (event.Records[0].body[0] != "{") return
 
@@ -143,4 +147,4 @@ async function downloadFile (url, targetFile) {
   })
 }
 
-module.exports = {hello}
+module.exports = {hello, encode_pro}
