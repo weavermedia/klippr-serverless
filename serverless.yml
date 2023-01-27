@@ -19,7 +19,7 @@ functions:
   encode_pro:
     architecture: x86_64
     memorySize: 10240
-    handler: handler.hello
+    handler: handler.encode_pro
     url: true
     timeout: 600
     layers:
@@ -27,6 +27,19 @@ functions:
     events:
       - sqs:
           arn: arn:aws:sqs:us-east-1:076776954382:KlipprProQueue
+          batchSize: 1
+
+  encode_free:
+    architecture: x86_64
+    memorySize: 1500
+    handler: handler.encode_free
+    url: true
+    timeout: 600
+    layers:
+      - {Ref: FfmpegLambdaLayer}
+    events:
+      - sqs:
+          arn: arn:aws:sqs:us-east-1:076776954382:KlipprFreeQueue
           batchSize: 1
 
 layers:
