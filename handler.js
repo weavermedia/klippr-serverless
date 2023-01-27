@@ -13,6 +13,12 @@ async function hello(event) {
 }
 
 async function encode_pro(event) {
+  console.log("=== ENCODING PRO VIDEO")
+  await encode_video(event)
+}
+
+async function encode_free(event) {
+  console.log("=== ENCODING FREE VIDEO")
   await encode_video(event)
 }
 
@@ -147,4 +153,4 @@ async function downloadFile (url, targetFile) {
   })
 }
 
-module.exports = {hello, encode_pro}
+module.exports = {hello, encode_pro, encode_free}

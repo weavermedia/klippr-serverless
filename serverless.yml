@@ -16,19 +16,6 @@ provider:
           Resource: "*"
 
 functions:
-  hello:
-    architecture: x86_64
-    memorySize: 10240
-    handler: handler.hello
-    url: true
-    timeout: 600
-    layers:
-      - {Ref: FfmpegLambdaLayer}
-    events:
-      - sqs:
-          arn: arn:aws:sqs:us-east-1:076776954382:KlipprQueue
-          batchSize: 1
-
   encode_pro:
     architecture: x86_64
     memorySize: 10240
