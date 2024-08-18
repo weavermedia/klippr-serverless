@@ -1,11 +1,10 @@
 org: klippr
 app: aws-node-http-api
 service: aws-node-http-api
-frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs18.x
   region: us-east-1
   iam:
     role:
