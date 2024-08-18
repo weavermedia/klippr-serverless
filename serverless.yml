@@ -16,7 +16,6 @@ provider:
 
 package:
   exclude:
-    - node_modules/**
     - package.json
     - package-lock.json
     - README.md
@@ -27,10 +26,7 @@ package:
     - .vscode/**
     - .DS_Store
     - .env
-  include:
-    - handler.js
-    - node_modules/centra/**
-    - node_modules/follow-redirects/**
+  excludeDevDependencies: true
 
 functions:
   encode_pro:
@@ -65,3 +61,4 @@ layers:
 
 plugins:
   - serverless-offline
+  - serverless-jetpack
