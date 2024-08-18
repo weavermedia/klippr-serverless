@@ -4,6 +4,8 @@ const centra = require('centra')
 const https = require('https')
 const AWS = require("aws-sdk")
 
+const temp_path = process.env.IS_OFFLINE ? __dirname + "/tmp" : "/tmp"
+const ffmpeg_path = process.env.IS_OFFLINE ? "/opt/homebrew/bin/ffmpeg" : "/opt/ffmpeg/ffmpeg"
 const s3 = new AWS.S3()
 
 "use strict"
@@ -47,8 +49,8 @@ async function encode_video(event) {
   console.log("=== Frame Rate", frame_rate)
   console.log("=== Webhook Base URL", webhook_base_url)
 
-  const imagePath = "/tmp/image.jpg"
-  const audioPath = "/tmp/audio.mp3"
+  const imagePath = temp_path + "/image.jpg"
+  const audioPath = temp_path + "/audio.mp3"
   const maskPath = "./assets/mask.png"
   const shadowPath = "./assets/shadow.png"
 
@@ -58,7 +60,7 @@ async function encode_video(event) {
   console.log("=== Finish downloading files")
 
   const videoName = "video-" + videoId + ".mp4"
-  const videoPath = "/tmp/" + videoName
+  const videoPath = temp_path + "/" + videoName
 
   // INPUTS
   // [0] IMAGE
@@ -68,7 +70,7 @@ async function encode_video(event) {
 
   console.log("=== Start FFMPEG")
   spawnSync(
-    "/opt/ffmpeg/ffmpeg",
+    ffmpeg_path,
     [
       "-y",
       "-r", frame_rate,

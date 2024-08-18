@@ -45,3 +45,6 @@ functions:
 layers:
   ffmpeg:
     path: layer
+
+plugins:
+  - serverless-offline
