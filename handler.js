@@ -8,10 +8,6 @@ const s3 = new AWS.S3()
 
 "use strict"
 
-async function hello(event) {
-  await encode_video(event)
-}
-
 async function encode_pro(event) {
   console.log("=== ENCODING PRO VIDEO")
   await encode_video(event)
@@ -153,4 +149,4 @@ async function downloadFile (url, targetFile) {
   })
 }
 
-module.exports = {hello, encode_pro, encode_free}
+module.exports = {encode_pro, encode_free}
