@@ -21,8 +21,8 @@ async function encode_free(event) {
 }
 
 async function encode_video(event) {
-  console.log("=== EVENT BODY", event.Records[0].body)
   if (event.Records[0].body[0] != "{") return
+  console.log("=== EVENT BODY", event.Records[0].body)
 
   let body = JSON.parse(event.Records[0].body)
 
@@ -110,7 +110,7 @@ async function encode_video(event) {
     video_temp_url: "https://klippr-temp.s3.us-east-1.amazonaws.com/" + videoName
   }
   const res = await centra(webhook_url, "POST").body(json, "json").send()
-	console.log("=== POST result", await res.statusCode)
+	console.log("=== POST result", res.statusCode)
 
   if (res.statusCode == 200) {
     console.log("=== Deleting S3 file")
